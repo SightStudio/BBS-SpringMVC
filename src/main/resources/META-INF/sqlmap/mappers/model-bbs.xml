@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bbs">
+	
+	<resultMap type="bbsVO" id="bbsMap">
+		<id property="id" column="id"/>
+		
+		<result property="id"      column="id"      />
+		<result property="title"   column="title"   />
+		<result property="content" column="content" />
+		<result property="time"    column="time"    />
+		<result property="flag"    column="flag"    />
+	</resultMap>
+	
+	<insert id="insert" parameterType="bbsVO">
+		INSERT INTO bbs 
+			(id, title, content, time, flag)
+		VALUES ( 
+			id , 
+			#{title} , 
+			#{content} , 
+			now() ,
+			1
+		 )
+	</insert>
+	
+	<select id="selectOne" resultType="bbsVO">
+		SELECT id, title, content, time 
+		FROM bbs
+		WHERE id = #{id} AND flag = 1
+	</select>
+	
+	<select id="selectBbsList" parameterType="pagingVO" resultType="bbsVO">
+		SELECT
+		    id, title, content, time, flag
+		FROM
+		    bbs
+		WHERE flag = 1
+			<if test="condition.search != '' and condition.search != null">
+				AND title LIKE CONCAT('%', #{condition.search}, '%')
+			</if>
+		ORDER BY 
+			<choose>
+				<when test="condition.order == 'desc'">
+					id desc, time desc
+				</when>
+				<when test="condition.order == 'asc'">
+					id asc, time asc
+				</when>
+				<otherwise>
+					id desc, time desc
+				</otherwise>
+			</choose>
+		limit #{condition.startIndex}, #{condition.size}
+	</select>
+	
+	<!-- <select id="selectBbsByKeyword" parameterType="pagingVO" resultType="bbsVO">
+		SELECT
+		    id, title, content, time, flag
+		FROM
+		    bbs
+		WHERE flag = 1 AND title LIKE CONCAT('%', #{condition.search}, '%')
+		ORDER BY id desc, time desc
+		limit #{condition.startIndex}, #{condition.size}
+	</select> -->
+	
+	<select id="countTotal" resultType="int">
+		SELECT count(*)
+		FROM  bbs
+		WHERE flag = 1
+		<if test="condition.search != '' and condition.search != null">
+			AND title LIKE CONCAT('%', #{condition.search}, '%')
+		</if>
+	</select>
+	
+	<update id="update" parameterType="bbsVO">
+		UPDATE 	bbs
+		SET    	title = #{title}, content = #{content}
+	    WHERE   id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="bbsVO">
+		UPDATE 	bbs
+		SET 	flag = 0
+		WHERE 	id = #{id}
+	</delete>
+</mapper>

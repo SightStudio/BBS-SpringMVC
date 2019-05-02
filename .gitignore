@@ -1,0 +1,14 @@
+## Eclipse IDE 설정 제외 ##
+
+.meatdata
+.settings/
+.loadpath
+.classpath
+.springBeans
+
+## Eclipse Core 제외 ##
+.project
+
+
+## Maven Target Dir 제외 ##
+/target

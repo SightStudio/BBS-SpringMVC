@@ -1,0 +1,59 @@
+header
+{
+    width: 100%;
+    text-align: center;
+    
+}
+
+main
+{
+    width : 100%;
+    margin-top: 50px;
+    text-align: center;
+}
+
+main > .contents
+{
+    width : 100%;
+    text-align: center;
+}
+
+.contents > .bbs-wrapper
+{
+    width: 800px;
+	margin: 0 auto;
+}
+
+.search-container
+{
+    text-align: right;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.bbs-table
+{
+    width: 800px;
+    text-align: center;
+    margin: 30px auto;
+}
+
+.bbs-table-row
+{
+    
+}
+
+.page-container > li
+{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px 0;
+    font-size: 20px;
+}
+
+.btn-container-control
+{
+	text-align: right;
+}
+
+
